@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_start">
+    <fragment
+        android:id="@+id/navigation_start"
+        android:name="space.example.friends.ui.startWindow.StartFragment"
+        android:label="StartFragment"
+        tools:layout="@layout/fragment_start"/>
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="space.example.friends.ui.uploadWindow.ChatFragment"
+        android:label="UploadFragment"
+        tools:layout="@layout/fragment_chat"/>
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="space.example.friends.ui.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_about"/>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="space.example.friends.ui.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+</navigation>

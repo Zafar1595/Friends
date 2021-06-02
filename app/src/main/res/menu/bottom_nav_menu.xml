@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_start"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Главны экран"/>
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="Чат"/>
+
+    <item
+        android:id="@+id/navigation_about"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="О приложении"/>
+
+</menu>
