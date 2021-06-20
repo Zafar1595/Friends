@@ -11,35 +11,36 @@ import space.example.friends.di.ResourceState
 import space.example.friends.setting.Setting
 import space.example.friends.ui.MainActivity
 
-class LoginActivity: AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val loginViewModel: LoginViewModel by inject()
-    private lateinit var setting: Setting
+    private val setting: Setting by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setting = Setting(this)
-        if(!setting.isAppFirstLaunched()){
+        if (!setting.isAppFirstLaunched()) {
             updateUi()
         }
 
         binding.btnLogin.setOnClickListener {
-            if(binding.edUsername.text.isNotEmpty() && binding.edPassword.text.isNotEmpty()){
-                loginViewModel.signIn(binding.edUsername.text.toString(), binding.edPassword.text.toString())
-            }else{
-                Toast.makeText(this, "Заполни все поля!", Toast.LENGTH_SHORT).show()
+            if (binding.edUsername.text.isNotEmpty() && binding.edPassword.text.isNotEmpty()) {
+                loginViewModel.signIn(
+                    binding.edUsername.text.toString(),
+                    binding.edPassword.text.toString()
+                )
+            } else {
+                showMessage("Заполни все поля!")
             }
         }
-        observeState()
     }
 
-    private fun observeState(){
+    private fun observeState() {
         loginViewModel.user.observe(this, {
-            when(it.status){
+            when (it.status) {
                 ResourceState.SUCCESS -> {
                     updateUi()
                     loading(false)
@@ -55,22 +56,28 @@ class LoginActivity: AppCompatActivity() {
         })
     }
 
-    private fun updateUi(){
+    private fun updateUi() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun loading(load: Boolean){
-        if(load){
+    private fun loading(load: Boolean) {
+        if (load) {
             binding.pbLoading.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.pbLoading.visibility = View.GONE
         }
     }
 
-    private fun showMessage(msg: String){
+    private fun showMessage(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
+
+    override fun onStart() {
+        super.onStart()
+        observeState()
+    }
+
 
 }

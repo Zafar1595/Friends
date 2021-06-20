@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_start"/>
     <fragment
         android:id="@+id/navigation_chat"
-        android:name="space.example.friends.ui.uploadWindow.ChatFragment"
+        android:name="space.example.friends.ui.chatWindow.ChatFragment"
         android:label="UploadFragment"
         tools:layout="@layout/fragment_chat"/>
     <fragment

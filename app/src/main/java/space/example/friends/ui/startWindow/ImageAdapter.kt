@@ -4,19 +4,38 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import space.example.friends.R
+import space.example.friends.data.Image
 
 class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ListViewHolder>() {
 
-    var imageUrlList: List<String> = listOf()
+    var imageUrlList: MutableList<Image> = mutableListOf()
     set(value) {
         field = value
         notifyDataSetChanged()
     }
 
+    fun removeModel(image: Image) {
+        var index = -1
+        for(i in imageUrlList.indices){
+            if(imageUrlList[i].name == image.name) {
+                index = i
+                break
+            }
+        }
+        imageUrlList.removeAt(index)
+        notifyItemRemoved(index)
+        notifyItemRangeChanged(0, imageUrlList.size)
+    }
+
+    private var onItemClickMore: (view: View, position: Int) -> Unit = { _, _ ->}
+    fun setOnItemClickMoreListener(onItemClickMore: (view: View, position: Int) -> Unit) {
+        this.onItemClickMore = onItemClickMore
+    }
 
 
     private var onItemClick: (position: Int) -> Unit = {}
@@ -25,12 +44,15 @@ class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ListViewHolder>() {
     }
 
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        fun populateModel(url: String, position: Int){
+        fun populateModel(image: Image, position: Int){
             val imageView = itemView.findViewById<ImageView>(R.id.image_view)
-            Log.d("ssilka", url)
-            Glide.with(itemView).load(url).into(imageView)
+            Glide.with(itemView).load(image.url).into(imageView)
             itemView.setOnClickListener {
                 onItemClick.invoke(position)
+            }
+
+            itemView.findViewById<ImageButton>(R.id.img_btn_more).setOnClickListener {
+                onItemClickMore.invoke(itemView.findViewById(R.id.img_btn_more), position)
             }
         }
     }

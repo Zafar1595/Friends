@@ -33,6 +33,7 @@
         app:labelVisibilityMode="labeled"
         app:itemTextColor="@color/black"
         android:background="@color/white"
+        android:hapticFeedbackEnabled="false"
         />
 
 
